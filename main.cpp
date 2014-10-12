@@ -6,6 +6,7 @@
 #include "body.h"
 #include "euler.h"
 #include "leapfrog.h"
+#include "seuler1.h"
 using namespace std;
 
 vector<Body*> bodies;
@@ -26,7 +27,6 @@ void parse(string filename)
         getline(iss,vx,' ');
         getline(iss,vy,' ');
         getline(iss,vz,' ');
-        getline(iss,name,' ');
         bodies.push_back(new Body(atof(x.c_str()), atof(y.c_str()), atof(z.c_str()), atof(vx.c_str()), atof(vy.c_str()), atof(vz.c_str()), atof(mass.c_str()), name));
     }
     file.close();
