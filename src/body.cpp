@@ -35,7 +35,7 @@ Body::~Body()
 {
     //dtor
 }
-
+//updates current speed and position to next speed and position
 void Body::update()
 {
     x=x1;
@@ -51,7 +51,7 @@ void Body::update()
     vy1=0;
     vz1=0;
 }
-
+//only updates speed
 void Body::updatev()
 {
     vx=vx1;
@@ -61,7 +61,7 @@ void Body::updatev()
     vy1=0;
     vz1=0;
 }
-
+//only updates position
 void Body::updater()
 {
     x=x1;

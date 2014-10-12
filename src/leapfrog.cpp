@@ -5,7 +5,9 @@
 using namespace std;
 #include "leapfrog.h"
 #define GRAVC (8.88711204/10000000000)
-
+/*********************************************
+Implementation of the second order leap-frog algorithm
+*********************************************/
 inline double squ(double x){
     return (x*x);
 }

@@ -3,40 +3,35 @@
 #include <iomanip>
 #include <iostream>
 using namespace std;
-#include "euler.h"
+#include "seuler1.h"
 #define GRAVC (8.88711204/10000000000)
 
 /*********************************************
-Implementation of the first order simple Euler algorithm
+Implementation of the first order symplectic Euler algorithm
 *********************************************/
-
 
 //returns x^2
 inline double squ(double x){
     return (x*x);
 }
 
-Euler::Euler(double timestep_):Integrator(timestep_)
+sEuler1::sEuler1(double timestep_):Integrator(timestep_)
 {
     //ctor
 }
 
-Euler::~Euler()
+sEuler1::~sEuler1()
 {
     //dtor
 }
 
-void Euler::tick(vector<Body*> &bodies){
+void sEuler1::tick(vector<Body*> &bodies){
     double vx1, vy1, vz1, x, y, z;
     for(vector<Body*>::iterator it = bodies.begin(); it != bodies.end(); ++it) {
         //save coordinates of body for easy reference
         x=(*it)->Getx();
         y=(*it)->Gety();
         z=(*it)->Getz();
-        //update positions based on current speed: x1 = x + v*t
-        (*it)->Setx1( x + timestep*(*it)->Getvx() );
-        (*it)->Sety1( y + timestep*(*it)->Getvy() );
-        (*it)->Setz1( z + timestep*(*it)->Getvz() );
         //save current speed for calculation of new speed
         vx1=(*it)->Getvx();
         vy1=(*it)->Getvy();
@@ -53,6 +48,11 @@ void Euler::tick(vector<Body*> &bodies){
         (*it)->Setvx1(vx1);
         (*it)->Setvy1(vy1);
         (*it)->Setvz1(vz1);
+
+        //update positions based on current speed: x1 = x + v*t
+        (*it)->Setx1( x + vx1*timestep );
+        (*it)->Sety1( y + vy1*timestep );
+        (*it)->Setz1( z + vz1*timestep );
     }
     //erase old positions and speed and replace them with the new ones
     for(vector<Body*>::iterator it = bodies.begin(); it != bodies.end(); ++it) {
@@ -60,6 +60,6 @@ void Euler::tick(vector<Body*> &bodies){
     }
 }
 
-void Euler::start(vector<Body*> &bodies) {
+void sEuler1::start(vector<Body*> &bodies) {
     return;
 }
